@@ -8,6 +8,25 @@ function findNeighbors(node, matrix) {
     // Right
 
     // Your code here 
+    let res = [];
+    let [row, col] = node;
+    let up = [row-1, col];
+    let down = [row+1, col];
+    let left = [row, col-1];
+    let right = [row, col+1];
+    let check = [up, down, left, right];
+
+    for (let i = 0; i < check.length; i++) {
+        let el = check[i];
+        if (el[0] >= 0 && el[1] >= 0 && el[0] <= matrix.length-1 && el[1] <= matrix[0].length-1) {
+            res.push(el);
+        }
+        
+        
+    }
+    
+
+    return res;
 }
 
 
@@ -71,3 +90,36 @@ function bfsPath(matrix, startNode, endValue) {
 /*************DO NOT MODIFY UNDER THIS LINE ***************/
 
 module.exports = [findNeighbors, bfsPath];
+
+const matrix1 = [ 
+    [  1,  2,  3,  4 ],
+    [  5,  6,  7,  8 ],
+    [  9, 10, 11, 12 ],
+    [ 13, 14, 15, 16 ]
+  ];
+
+  const matrix2 = [
+    [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ],
+    [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ],
+    [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ],
+    [ 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ],
+    [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ],
+    [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 3, 1, 1 ],
+    [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ],
+    [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ],
+    [ 1, 1, 1, 4, 1, 1, 1, 1, 1, 1, 1, 1 ],
+    [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ],
+    [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ],
+    [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 5 ]
+  ];
+
+// const topCornerNeighbors = findNeighbors([0,0], matrix1);
+
+// console.log(topCornerNeighbors.length)//.to.equal(2);
+// console.log(topCornerNeighbors)//.to.deep.include.members([ [ 0, 1 ], [ 1, 0 ] ]);
+
+
+const bottomCornerNeighbors = findNeighbors([11,0], matrix2);
+
+console.log(bottomCornerNeighbors.length)//.to.equal(2);
+console.log(bottomCornerNeighbors)//.to.deep.include.members([ [ 11, 1 ], [ 10, 0 ] ]);

@@ -32,17 +32,74 @@ function findNeighbors(node, matrix) {
 
 function bfsPath(matrix, startNode, endValue) {
     // Your code here 
+    // find all 4 neighbors of the startNode
+
+    // option 1: using simple breadth-first search
+
+    let queue = [startNode];
+    let visited = new Set();
+    let res = [startNode]
+
+    while (queue.length) {
+        
+        let currentNode = queue.shift();
+
+        if (matrix[currentNode[0]][currentNode[1]] === endValue) return res;
+
+        if (!visited.has(currentNode.toString())) {
+            visited.add(currentNode.toString());
+        }
+
+        let neighbors = findNeighbors(currentNode, matrix);
+
+        for (let neighbor of neighbors) {
+            if (!visited.has(neighbor.toString())) {
+                visited.add(neighbor.toString());
+                queue.push(neighbor);
+                res.push(neighbor);
+            }
+        }
+    }
+    return false;
+
+    // // [different results] Option 2: finding shortestPath towards endValue through breadth-first search
+    // let queue = [[startNode]];
+    // let visited = new Set([startNode].toString());
+
+    // while (queue.length) {
+    //     let currentPath = queue.shift();
+    //     let lastC = currentPath[currentPath.length-1];
+
+    //     if (matrix[lastC[0]][lastC[1]] === endValue) return currentPath;
+
+    //     if (!visited.has(lastC.toString())) {
+    //         visited.add(lastC.toString());
+    //     }
+
+    //     let neighbors = findNeighbors(lastC, matrix);
+
+    //     for (let neighbor of neighbors) {
+    //         if (!visited.has(neighbor.toString())) {
+    //             visited.add(neighbor.toString());
+    //             queue.push(currentPath.concat([neighbor]));
+    //         }
+    //     }
+
+    
+    // }
+    // return false;
+
 }
 
 
 // ***** UNCOMMENT FOR LOCAL TESTING *****
 
-// const matrix1 = [ 
-//     [  1,  2,  3,  4 ],
-//     [  5,  6,  7,  8 ],
-//     [  9, 10, 11, 12 ],
-//     [ 13, 14, 15, 16 ]
-// ];
+const matrix1 = [ 
+    [  1,  2,  3,  4 ],
+    [  5,  6,  7,  8 ],
+    [  9, 10, 11, 12 ],
+    [ 13, 14, 15, 16 ]
+];
 
 // // EXAMPLE TESTS #1. Tests for findNeighbors function
 // console.log(findNeighbors([1,1], matrix1)) // Finds all 4 neighbors from an
@@ -58,7 +115,7 @@ function bfsPath(matrix, startNode, endValue) {
 
 // EXAMPLE TESTS #2. Tests for bfsPath function
 
-// console.log(bfsPath(matrix1, [0,0], 16)); // can traverse the entire matrix
+console.log(bfsPath(matrix1, [0,0], 16)); // can traverse the entire matrix
 // returns an array of coordinates with no duplicates:
 
 // [
@@ -75,15 +132,15 @@ function bfsPath(matrix, startNode, endValue) {
 // Note for debugging purposes: The coordinates should represent the following matrix values, in order:
 // 1 5 2 9 6 3 13 10 7 4 14 11 8 15 12 16
 
-// console.log(bfsPath(matrix1, [2,2], 11)); // returns a single node if end
+console.log(bfsPath(matrix1, [2,2], 11)); // returns a single node if end
 // // value is located at start node
 // // [ [ 2, 2 ] ]
 
-// console.log(bfsPath(matrix1, [1,2], 8)); // can handle various start nodes 
+console.log(bfsPath(matrix1, [1,2], 8)); // can handle various start nodes 
 // // and end values
 // // [ [ 1, 2 ], [ 0, 2 ], [ 2, 2 ], [ 1, 1 ], [ 1, 3 ] ]
 
-// console.log(bfsPath(matrix1, [0,0], 17)); // can return false if end value 
+console.log(bfsPath(matrix1, [0,0], 17)); // can return false if end value 
 // // is not found
 // // false
 
@@ -91,35 +148,3 @@ function bfsPath(matrix, startNode, endValue) {
 
 module.exports = [findNeighbors, bfsPath];
 
-const matrix1 = [ 
-    [  1,  2,  3,  4 ],
-    [  5,  6,  7,  8 ],
-    [  9, 10, 11, 12 ],
-    [ 13, 14, 15, 16 ]
-  ];
-
-  const matrix2 = [
-    [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ],
-    [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ],
-    [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ],
-    [ 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ],
-    [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ],
-    [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 3, 1, 1 ],
-    [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ],
-    [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ],
-    [ 1, 1, 1, 4, 1, 1, 1, 1, 1, 1, 1, 1 ],
-    [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ],
-    [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ],
-    [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 5 ]
-  ];
-
-// const topCornerNeighbors = findNeighbors([0,0], matrix1);
-
-// console.log(topCornerNeighbors.length)//.to.equal(2);
-// console.log(topCornerNeighbors)//.to.deep.include.members([ [ 0, 1 ], [ 1, 0 ] ]);
-
-
-const bottomCornerNeighbors = findNeighbors([11,0], matrix2);
-
-console.log(bottomCornerNeighbors.length)//.to.equal(2);
-console.log(bottomCornerNeighbors)//.to.deep.include.members([ [ 11, 1 ], [ 10, 0 ] ]);

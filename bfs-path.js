@@ -20,9 +20,7 @@ function findNeighbors(node, matrix) {
         let el = check[i];
         if (el[0] >= 0 && el[1] >= 0 && el[0] <= matrix.length-1 && el[1] <= matrix[0].length-1) {
             res.push(el);
-        }
-        
-        
+        }  
     }
     
 
@@ -38,14 +36,18 @@ function bfsPath(matrix, startNode, endValue) {
 
     let queue = [startNode];
     let visited = new Set();
-    let res = [startNode]
+    // let res = [startNode];
+    let res = [];
 
     while (queue.length) {
         
         let currentNode = queue.shift();
+        res.push(currentNode);
 
-        if (matrix[currentNode[0]][currentNode[1]] === endValue) return res;
-
+        if (matrix[currentNode[0]][currentNode[1]] === endValue) {
+            // res.slice()
+            return res;
+        }
         if (!visited.has(currentNode.toString())) {
             visited.add(currentNode.toString());
         }
@@ -56,7 +58,8 @@ function bfsPath(matrix, startNode, endValue) {
             if (!visited.has(neighbor.toString())) {
                 visited.add(neighbor.toString());
                 queue.push(neighbor);
-                res.push(neighbor);
+                // res.push(neighbor);
+                // console.log('res and level: ', res, ' & ', res.length);
             }
         }
     }
@@ -140,7 +143,7 @@ console.log(bfsPath(matrix1, [1,2], 8)); // can handle various start nodes
 // // and end values
 // // [ [ 1, 2 ], [ 0, 2 ], [ 2, 2 ], [ 1, 1 ], [ 1, 3 ] ]
 
-console.log(bfsPath(matrix1, [0,0], 17)); // can return false if end value 
+// console.log(bfsPath(matrix1, [0,0], 17)); // can return false if end value 
 // // is not found
 // // false
 
